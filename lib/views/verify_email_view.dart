@@ -18,7 +18,9 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
         title: const Text('Verify email'),
       ),
       body: Column(children: [
-        const Text('Please verify your email address:'),
+        const Text('We have already sent email verification.Please check once'),
+        const Text(
+            'Not recieved email verification yet? Press the below button'),
         TextButton(
             onPressed: () async {
               final user = FirebaseAuth.instance.currentUser;
@@ -30,7 +32,14 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
               Navigator.of(context)
                   .pushNamedAndRemoveUntil(loginRoute, (route) => false);
             },
-            child: const Text('Already Verified'))
+            child: const Text('Already Verified')),
+        TextButton(
+            onPressed: () async {
+              await FirebaseAuth.instance.signOut();
+              Navigator.of(context)
+                  .pushNamedAndRemoveUntil(registerRoute, (route) => false);
+            },
+            child: const Text('Restart'))
       ]),
     );
   }
